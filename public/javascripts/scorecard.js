@@ -67,7 +67,7 @@ function toggleValue(v){
 function newScorecard(){
   let scorecard = createScorecard();
 
-  let background = getRandomInt(1,26);
+  let background = getRandomInt(1,23);
 
   localStorage.setItem('background', JSON.stringify(background));
   $('head').append('<style>#personal-grid__grid:before{background-image: url("/images/backgrounds/background-' + background + '.jpg");}</style>');
