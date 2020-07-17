@@ -1,23 +1,35 @@
-const goalVals = require('./goalCards')
 
 const dirtyVersion = process.env.VERSION === 'dirty'
-const valuesData = {
-  setA: [3, 4, 6, 7, 8, 9, 10, 12, 13],
-  setB: [1, 2, 3, 5, 5, 6, 6, 7, 8, 8, 9, 10, 10, 11, 11, 13, 14, 15],
-  setC: [1, 2, 4, 5, 5, 6, 7, 7, 8, 8, 9, 9, 10, 11, 11, 12, 14, 15]
-}
 
-let typesData
+let gameCards = [
+  '0000000000001000000000000',
+  '0000000000001000000000000',
+  '0000000000001000000000000',
+  '0000000000001100000000000',
+  '0000000000001100000000000',
+  '0000000000001100000000000',
+  '0000000100001100000000000',
+  '0000000100001100000000000',
+  '0000000100001100000000000',
+  '0000000000011100000000000',
+  '0000000000011100000000000',
+  '0000000000011100000000000',
+  '0000000100011000100000000',
+  '0000000100001000010000100',
+  '0000000100001000011000000',
+  '0000000100001100010000000',
+  '0000000110001100000000000',
+  '0000001100010000110000000',
+  '0000000100011100010000000',
+  '0000001110001000010000000',
+  '0000000110011100000000000',
+  '0000000110011000100000000',
+  '0000000000011110010000000',
+  '0000001000010000111000000',
+  '0000001110000110000000000',
+  '0000000110001000110000000',
+]
 
-  typesData = {
-    pools: valuesData.setA,
-    bis: valuesData.setA,
-    construction: valuesData.setA,
-    fences: valuesData.setB,
-    parks: valuesData.setC
-  }
-  const stonks = dirtyVersion ? 'stonks' : 'invest'
-  typesData[stonks] = valuesData.setC
 
 //https://github.com/Daplie/knuth-shuffle
 function shuffle(array) {
@@ -40,38 +52,23 @@ function shuffle(array) {
 }
 
 module.exports = {
-
-shuffleGoals: function (goalCards, advGame){
-  const filtered = goalCards.filter(g => advGame || !g.adv)
-  return shuffle(filtered)
-},
-
-createDeck: function(){
-    const deck = []
-
-    Object.keys(typesData).forEach(back => {
-      typesData[back].forEach(front => {
-        const version = dirtyVersion ? Math.floor(Math.random() * 3) + 1 : 'clean'
-        deck.push({front, back, version})
-      })
-    })
-
-    //return complete deck
-    return shuffle(deck)
+shuffleCards: function (){
+  var clone = gameCards.slice(0);
+  return shuffle(clone)
 },
 drawCards: function(d){
-  return d.splice(0, 3)
+  return d.splice(0, 2)
 },
-chooseGoals: function(advGame = false){
-  const goals = []
-
-  const allGoals = [goalVals.n1,goalVals.n2,goalVals.n3]
-  allGoals.forEach(n => {
-    const shuffled = this.shuffleGoals(n,advGame)
-    goals.push(shuffled[0])
-  })
-
-  return goals
-
-},
+// drawStarter: function(advGame = false){
+//   const goals = []
+//
+//   const allGoals = [goalVals.n1,goalVals.n2,goalVals.n3]
+//   allGoals.forEach(n => {
+//     const shuffled = this.shuffleGoals(n,advGame)
+//     goals.push(shuffled[0])
+//   })
+//
+//   return goals
+//
+// },
 }

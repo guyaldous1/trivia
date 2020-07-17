@@ -1,106 +1,63 @@
     const socket = io()
     let alreadyPlaying = false
 
+
     socket.on('data', init)
+
     socket.on('newClient', (obj) => {
       if (!alreadyPlaying)
         init(obj)
       alreadyPlaying = true
     })
 
+
+    function renderCard(card){
+      let cardArr = card.split("");
+
+      const inner = document.createElement('div')
+      inner.setAttribute('class', 'card__grid')
+
+      cardArr.forEach((item, i) => {
+        let piece = document.createElement('div')
+        piece.setAttribute('class', 'card__grid__item')
+
+        if(item === "1"){
+          piece.classList.add('card__grid__item--active')
+        }
+
+        inner.appendChild(piece);
+      });
+
+      const wrap = document.createElement('div')
+      wrap.setAttribute('class', 'card')
+      wrap.appendChild(inner)
+
+      return wrap
+      }
+
+    function renderCards(cards){
+      let cardHolder = $('#card-row');
+
+      cardHolder.empty()
+      cards.forEach(item => {
+        cardHolder.append(renderCard(item))
+      })
+
+    }
+
     function init(obj){
       console.log(obj)
-      if (obj.topThree !== undefined){
-        const cardLocations = {
-          top : obj.topThree,
-          bottom : obj.bottomThree,
-          goal : obj.currentGoals,
-        }
+      let currentCards = obj.currentCards;
 
-        function cardFlip(location){
-          cardType = $(`#${location}-row`)
-
-          const oldCards = cardType.html()
-          $(`#${location}-old`).html(oldCards)
-
-          cardType.empty()
-          cardLocations[location].forEach(item => {
-            cardType.append(renderCard(item,location))
-          })
-          cardType.fadeIn()
-        }
-        $('#top-row').fadeOut(() => cardFlip('top'))
-        $('#bottom-row').fadeOut(() => cardFlip('bottom'))
-        if (obj.action === 'newGame' || obj.action === 'state'){
-          $('.wt-popover').removeClass('open')
-          $('#goal-row').fadeOut(() => cardFlip('goal'))
-        }
+      if (currentCards.length > 0){
+        renderCards(currentCards);
+      } else {
+        $('#card-row').empty()
+        alert('out of cards')
       }
     }
 
-    function renderCard(card,location){
-      const front = card.front
-      const back = card.back
-      let img = `images/${back}/${card.version}.jpg`
 
-      const inner = document.createElement('div')
-      let name
-
-      switch(location) {
-        case 'bottom':
-
-          const number = document.createElement('h2')
-          number.innerHTML = front
-
-          name = document.createElement('small')
-          name.innerHTML = back
-
-          const layer = document.createElement('div')
-          layer.setAttribute('class', 'layer')
-
-          inner.setAttribute('class', 'card')
-          inner.appendChild(layer)
-          inner.appendChild(number)
-          break
-        case 'top':
-          name = document.createElement('h3')
-          name.innerHTML = back
-
-          inner.setAttribute('class', 'card')
-          inner.setAttribute('style', `background-image:url("${img}")`)
-          break
-        case 'goal':
-            const goal = card.goal
-            const first = card.first
-            const other = card.other
-
-            img = `/images/goals/${first}.jpg`
-
-            name = document.createElement('h3')
-            name.innerHTML = goal
-
-            const firstP = document.createElement('p')
-            firstP.setAttribute('class', 'first')
-            firstP.innerHTML = first
-
-            const otherP = document.createElement('p')
-            otherP.setAttribute('class', 'other')
-            otherP.innerHTML = other
-
-            inner.setAttribute('class', 'card goal')
-            inner.appendChild(firstP)
-            inner.appendChild(otherP)
-        default:
-          break
-      }
-
-          inner.appendChild(name)
-          inner.setAttribute('style', `background-image:url("${img}")`)
-          const wrap = document.createElement('div')
-          wrap.setAttribute('class', 'col-sm-4')
-          wrap.appendChild(inner)
-          return wrap
-      }
 
   $(() => {
     $('.btn.ajax').on('click', function(e){

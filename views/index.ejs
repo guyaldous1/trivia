@@ -4,50 +4,43 @@
  <% include partials/head %>
 </head>
 <body>
-<!-- <% include partials/menu %> -->
-<button class="btn btn-secondary old-buttons btn-sm" id="openOld">Last Round</button>
-<button class="btn btn-secondary btn-sm" id="dark-mode">Dark Mode</button>
-
-<div class="container text-center">
-  <div class="row align-items-center justify-content-center full-height">
-<div class="col-12">
+<header>
+  <!-- <button class="btn btn-secondary old-buttons btn-sm" id="openOld">Last Round</button> -->
+        <h1><%= page %></h1>
+  <!-- <button class="btn btn-secondary btn-sm" id="dark-mode">Dark Mode</button> -->
+</header>
 
 
+<div class="container-fluid text-center">
+  <div class="row align-items-center justify-content-center full-height game-row">
+
+<!-- game -->
+<div class="col-8">
     <div class="row">
 
+      <!-- cards -->
     <div class="col-12">
-      <h1><%= page %></h1>
-    </div>
-
-    <div class="col-12">
-
-      <div class="row" id="top-row">
+      <div class="row align-items-center justify-content-center" id="card-row">
 
       </div>
-
-      <div class="row" id="bottom-row">
-
-      </div>
-
     </div>
 
+    <!-- controls -->
     <div class="col-12" id="game-controls">
       <button class="btn btn-success ajax" name="action" value="next">Next</button>
-      <button class="btn btn-danger ajax" name="action" value="shuffle">Shuffle</button>
-    </div>
-
-    <div class="col-12" id="start-controls">
-      <div class="row" id="goal-row">
-
-      </div>
-        <button class="btn btn-success" id="openNew">New Game</button>
+      <button class="btn btn-success" id="openNew">New Game</button>
     </div>
 
   </div>
 
+</div>
+
+<!-- grid -->
+  <div class="col-4 personal-grid" style="background: black;color:white">
+    PERSONAL GRID
   </div>
 
-  <div class="col-12">
+  <div class="col-12 d-none">
     <p style="margin-top:30px;"><a href="/images/downloads/player-aid.png" target="_blank">Download Player Aid</a>
       &nbsp;&nbsp;|&nbsp;&nbsp;
     <a href="/images/downloads/score-sheet.png" target="_blank">Download Score Sheet</a></p>
@@ -57,7 +50,7 @@
   </div>
 </div>
 
-<section id="oldCards" class="wt-popover">
+<!-- <section id="oldCards" class="wt-popover">
   <button class="btn btn-secondary old-buttons btn-sm" id="closeOld">Close</button>
   <div class="container">
     <div class="row align-items-center justify-content-center full-height">
@@ -74,7 +67,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <section id="newGame" class="wt-popover">
   <div class="container">
