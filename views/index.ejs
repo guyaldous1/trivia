@@ -4,25 +4,24 @@
  <% include partials/head %>
 </head>
 <body>
-<header>
-  <!-- <button class="btn btn-secondary old-buttons btn-sm" id="openOld">Last Round</button> -->
-        <h1><%= page %></h1>
-  <!-- <button class="btn btn-secondary btn-sm" id="dark-mode">Dark Mode</button> -->
-  <!-- <button class="btn btn-success ajax" name="action" value="next">Next</button> -->
-  <button class="btn btn-success" id="openNew">New Game</button>
-</header>
-
 
 <div class="container-fluid text-center">
-  <div class="row align-items-center justify-content-center full-height game-row">
+  <div class="row full-height game-row">
 
 <!-- game -->
 <div class="col-8">
+  <header>
+    <!-- <button class="btn btn-secondary old-buttons btn-sm" id="openOld">Last Round</button> -->
+          <h1><%= page %></h1>
+    <!-- <button class="btn btn-secondary btn-sm" id="dark-mode">Dark Mode</button> -->
+    <!-- <button class="btn btn-success ajax" name="action" value="next">Next</button> -->
+    <button class="btn btn-success" id="openNew">New Game</button>
+  </header>
     <div class="row">
 
       <!-- cards -->
     <div class="col-12">
-      <div class="row align-items-center justify-content-center" id="card-row">
+      <div class="row justify-content-center" id="card-row">
 
       </div>
     </div>
@@ -34,17 +33,7 @@
 
     <!-- players -->
     <div class="col-12" id="players">
-      <div class="player">
-        <h3>Rob</h3>
-        <div class="player_chance">
 
-          <button class="btn btn-success ajax" name="action" value="chance" player="Rob">Second Chance</button>
-        </div>
-        <div class="player_starter">
-
-          <button class="btn btn-success ajax" name="action" value="starter" player="Rob">Deal Starter</button>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -52,12 +41,12 @@
 </div>
 
 <!-- grid -->
-  <div class="col-4 personal-grid" style="background: black;color:white">
+  <div class="col-4 personal-grid">
     <div id="personal-grid__grid">
     </div>
 
     <div>
-      Score: <span id="grid-score">0</span>
+      Empty Spaces: <span id="grid-score">0</span>
     </div>
     <!-- <button class="btn btn-success" id="clearScore">Clear Grid</button> -->
   </div>

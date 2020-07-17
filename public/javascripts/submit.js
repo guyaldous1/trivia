@@ -105,8 +105,17 @@
       let players = obj.players;
 
       if(obj.action === 'newGame'){
-        scorecard = newScorecard()
+        let scorecard = newScorecard()
         renderScorecard(scorecard);
+      }
+
+      if(obj.action === 'done' && obj.next === true){
+        let scorecard = getSavedScore();
+
+        let newScorecard = scorecard.map(function(item){ return item === 2 ? 1 : item })
+
+        saveScore(newScorecard);
+        renderScorecard(newScorecard);
       }
 
       if (currentCards.length > 0){

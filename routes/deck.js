@@ -14,6 +14,7 @@ const state = {
 const getResponse = (action, player, players) => {
 
   state.action = action
+  state.next = false
 
   if(action == 'next'){
 
@@ -63,6 +64,7 @@ const getResponse = (action, player, players) => {
       state.currentCards = deck.drawCards(state.currentDeck);
       state.players.map(x => x.secondChances = []);
       state.players.map(x => x.done = false);
+      state.next = true
     }
 
   } else if (action == 'chance'){

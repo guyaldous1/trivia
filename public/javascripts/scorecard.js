@@ -46,6 +46,7 @@ function renderScorecard(scorecard){
 
 
     if(item === 1) element.classList.add('active')
+    if(item === 2) element.classList.add('clicked')
 
     wrapper.append(element)
   });
@@ -56,17 +57,17 @@ function renderScorecard(scorecard){
 }
 
 function toggleValue(v){
-  if(v == 1){
+  if(v == 0){
+    return 2
+  } else if (v == 2){
     return 0
-  } else if (v == 0){
-    return 1
   }
 }
 
 function newScorecard(){
   let scorecard = createScorecard();
 
-  let background = getRandomInt(1,18);
+  let background = getRandomInt(1,26);
 
   localStorage.setItem('background', JSON.stringify(background));
   $('head').append('<style>#personal-grid__grid:before{background-image: url("/images/backgrounds/background-' + background + '.jpg");}</style>');
@@ -104,10 +105,5 @@ $(() => {
     scorecard = newScorecard()
     renderScorecard(scorecard);
   }
-
-  $('#clearScore').on('click', function(){
-    scorecard = newScorecard();
-    renderScorecard(scorecard);
-  })
 
 });
