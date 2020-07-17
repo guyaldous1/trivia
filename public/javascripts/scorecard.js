@@ -84,11 +84,14 @@ function clickHandlers(scorecard){
     let target = $(this);
     let id = target.attr('data-arr');
     let current = scorecard[id];
-    let newV = toggleValue(current);
 
-    scorecard.splice(id, 1, newV);
-    saveScore(scorecard);
-    renderScorecard(scorecard);
+    if(current !== 1){
+      let newV = toggleValue(current);
+
+      scorecard.splice(id, 1, newV);
+      saveScore(scorecard);
+      renderScorecard(scorecard);
+    }
   })
 
 }
