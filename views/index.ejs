@@ -27,8 +27,24 @@
 
     <!-- controls -->
     <div class="col-12" id="game-controls">
+
       <button class="btn btn-success ajax" name="action" value="next">Next</button>
       <button class="btn btn-success" id="openNew">New Game</button>
+    </div>
+
+    <!-- players -->
+    <div class="col-12" id="players">
+      <div class="player">
+        <h3>Rob</h3>
+        <div class="player_chance">
+
+          <button class="btn btn-success ajax" name="action" value="chance" player="Rob">Second Chance</button>
+        </div>
+        <div class="player_starter">
+
+          <button class="btn btn-success ajax" name="action" value="starter" player="Rob">Deal Starter</button>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -37,7 +53,15 @@
 
 <!-- grid -->
   <div class="col-4 personal-grid" style="background: black;color:white">
-    PERSONAL GRID
+    <div id="personal-grid__grid">
+        <div class="personal-grid__item">
+
+        </div>
+    </div>
+    <div id="grid-score">
+      0
+    </div>
+    <button class="btn btn-success" id="clearScore">Clear Grid</button>
   </div>
 
   <div class="col-12 d-none">

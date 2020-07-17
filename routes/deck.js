@@ -5,23 +5,70 @@ const state = {
   action: 'blank',
   currentCards: [],
   currentDeck: [],
+  players: [
+    {
+      name: 'Emily',
+      secondChances: []
+    },
+    {
+      name: 'Guy',
+      secondChances: []
+    },
+    {
+      name: 'Rob',
+      secondChances: [],
+      starter: []
+    },
+    {
+      name: 'Kath',
+      secondChances: []
+    },
+    {
+      name: 'Charlie',
+      secondChances: []
+    },
+    {
+      name: 'Shane',
+      secondChances: []
+    },
+  ],
+  starterDeck: [],
 }
 
-const getResponse = (action) => {
+const getResponse = (action, player) => {
   state.action = action
   if(action == 'next'){
     state.currentCards = deck.drawCards(state.currentDeck);
+    state.players.map(x => x.secondChances = []);
   } else if (action == 'newGame') {
     state.currentDeck = deck.shuffleCards();
-    console.log(state.currentDeck)
-    state.currentCards = deck.drawCards(state.currentDeck);
+    state.starterDeck = deck.shuffleStarters();
+    state.players.forEach((item, i) => {
+      item.secondChances = deck.drawStarters(state.starterDeck);
+    });
+  } else if (action == 'starter') {
+    let starter = deck.drawStarters(state.starterDeck);
+    state.players.find((p, i) => {
+      if(p.name === player){
+          p.starter = starter
+      }
+    });
+  } else if (action == 'chance'){
+    let chance = deck.drawStarters(state.currentDeck);
+      state.players.find((p, i) => {
+        if(p.name === player && p.secondChances.length === 0){
+            p.secondChances = chance
+        }
+    });
   }
   return state
 }
 
 const responseAction = (req,res) => {
 
-  const response = getResponse(req.body.action || 'state')
+  const response = getResponse(req.body.action || 'state', req.body.player)
+  // console.log(req.body);
+
 
   if(response === undefined)
     res.sendStatus(500)
