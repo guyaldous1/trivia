@@ -104,6 +104,11 @@
       let currentCards = obj.currentCards;
       let players = obj.players;
 
+      if(obj.action === 'newGame'){
+        scorecard = newScorecard()
+        renderScorecard(scorecard);
+      }
+
       if (currentCards.length > 0){
         renderCards(currentCards);
       } else if (obj.currentDeck.length === 0) {
@@ -115,6 +120,8 @@
         renderPlayers(players);
       }
 
+
+      //button bindings
       $('.btn.ajax').on('click', function(e){
 
         $('.btn.ajax').off('click');
@@ -140,20 +147,36 @@
 
 
   $(() => {
-    // $('.btn.ajax').on('click', function(e){
-    //   $('.wt-popover').removeClass('open')
-    //
-    //   let player;
-    //
-    //   if($(this).attr('player')){
-    //     player = $(this).attr('player');
-    //   }
-    //
-    //   const req = {
-    //     action: $(this).attr('value'),
-    //     player: player,
-    //   }
-    //
-    //   $.post("/deck", req )
-    // })
+
+    $('#newGame--form').on('submit', function(e){
+      e.preventDefault();
+      let action = $(this).attr('value');
+
+      let newPlayers = []
+
+      $('#newGame--form input').each(function(e){
+        let value = $(this).val();
+        if(value) newPlayers.push(value)
+      })
+
+      if(newPlayers.length < 2){
+        alert('add more players')
+        return
+      }
+
+      $('#newGame--p1').removeClass('d-none')
+      $('#newGame--p2').addClass('d-none')
+      $('.wt-popover').removeClass('open')
+
+      const pReq = {
+        action: action,
+        players: JSON.stringify(newPlayers),
+      }
+
+      console.log(pReq)
+
+      $.post("/deck", pReq )
+
+    })
+
   })

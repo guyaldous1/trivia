@@ -43,12 +43,24 @@ $( document ).ready(function() {
   //new game pop-over
   const newGame = $('#newGame')
 
+  let part1 = $('#newGame--p1')
+  let part2 = $('#newGame--p2')
+
+  part2.addClass('d-none')
+
   $('#openNew').on('click', function(e){
     newGame.addClass('open')
   })
 
+  $('#part2Nav').on('click', function(){
+    part1.addClass('d-none')
+    part2.removeClass('d-none')
+  })
+
   $('#closeNew').on('click', function(e){
     newGame.removeClass('open')
+    part2.addClass('d-none')
+    part1.removeClass('d-none')
   })
 
 })

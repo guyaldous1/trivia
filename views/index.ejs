@@ -54,14 +54,12 @@
 <!-- grid -->
   <div class="col-4 personal-grid" style="background: black;color:white">
     <div id="personal-grid__grid">
-        <div class="personal-grid__item">
+    </div>
 
-        </div>
+    <div>
+      Score: <span id="grid-score">0</span>
     </div>
-    <div id="grid-score">
-      0
-    </div>
-    <button class="btn btn-success" id="clearScore">Clear Grid</button>
+    <!-- <button class="btn btn-success" id="clearScore">Clear Grid</button> -->
   </div>
 
   <div class="col-12 d-none">
@@ -96,11 +94,27 @@
 <section id="newGame" class="wt-popover">
   <div class="container">
     <div class="row align-items-center justify-content-center full-height">
-      <div class="col-12 text-center">
+
+      <div class="col-12 text-center" id="newGame--p1">
         <h2>Start a new game?</h2>
 
-        <button class="btn btn-success ajax" name="action" value="newGame">Yes new game plz</button>
+        <button class="btn btn-success" id="part2Nav">Yes new game plz</button>
         <button class="btn btn-danger" id="closeNew">No i have made a grievous error</button>
+
+      </div>
+
+      <div class="col-md-8 text-center" id="newGame--p2">
+        <h2>Who's Playing?</h2>
+
+        <form id="newGame--form" value="newGame">
+            <input type="text" class="player-input" placeholder="Enter Name">
+            <input type="text" class="player-input" placeholder="Enter Name">
+            <input type="text" class="player-input" placeholder="Enter Name">
+            <input type="text" class="player-input" placeholder="Enter Name">
+            <input type="text" class="player-input" placeholder="Enter Name">
+            <input type="text" class="player-input" placeholder="Enter Name">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 
       </div>
     </div>

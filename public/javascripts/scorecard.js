@@ -1,10 +1,19 @@
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function saveScore(arr){
   localStorage.setItem('scorecard', JSON.stringify(arr));
 };
 
 function getSavedScore(){
+
+  let background = JSON.parse(localStorage.getItem('background'));
+  $('head').append('<style>#personal-grid__grid:before{background-image: url("/images/backgrounds/background-' + background + '.jpg");}</style>');
+
   let scorecard = JSON.parse(localStorage.getItem('scorecard'));
   return scorecard
 }
@@ -27,7 +36,7 @@ function showScore(scorecard){
 
 function renderScorecard(scorecard){
   let wrapper = $('#personal-grid__grid')
-
+  wrapper.removeClass('loaded')
   wrapper.empty()
 
   scorecard.forEach((item, i) => {
@@ -43,7 +52,7 @@ function renderScorecard(scorecard){
 
   showScore(scorecard)
   clickHandlers(scorecard)
-
+  wrapper.addClass('loaded')
 }
 
 function toggleValue(v){
@@ -56,7 +65,14 @@ function toggleValue(v){
 
 function newScorecard(){
   let scorecard = createScorecard();
+
+  let background = getRandomInt(1,18);
+
+  localStorage.setItem('background', JSON.stringify(background));
+  $('head').append('<style>#personal-grid__grid:before{background-image: url("/images/backgrounds/background-' + background + '.jpg");}</style>');
+
   saveScore(scorecard);
+
   return scorecard;
 }
 
@@ -81,7 +97,6 @@ $(() => {
   let grid = $('#personal-grid__grid');
 
   let scorecard = getSavedScore();
-
 
   if(scorecard !== null){
     renderScorecard(scorecard);
