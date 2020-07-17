@@ -118,12 +118,12 @@
       let currentCards = obj.currentCards;
       let players = obj.players;
 
+
+      //render the scorecard
       if(obj.action === 'newGame'){
         let scorecard = newScorecard()
         renderScorecard(scorecard);
-      }
-
-      if(obj.action === 'done' && obj.next === true){
+      } else if (obj.action === 'done' || obj.action === 'rip' && obj.next === true) {
         let scorecard = getSavedScore();
 
         let newScorecard = scorecard.map(function(item){ return item === 2 ? 1 : item })
@@ -132,13 +132,20 @@
         renderScorecard(newScorecard);
       }
 
+
+      // render the cards
       if (currentCards.length > 0){
         renderCards(currentCards);
       } else if (obj.currentDeck.length === 0) {
         $('#card-row').empty()
         alert('create new game')
+      } else {
+        $('#card-row').empty()
+        renderCards(currentCards);
       }
 
+
+      //render the players
       if (players.length > 0){
         renderPlayers(players);
       }

@@ -10,6 +10,7 @@ function checkNext(){
     state.players = state.players.filter(p => !p.rip);
     state.players.map(x => x.secondChances = []);
     state.players.map(x => x.done = false);
+    state.players.map(x => x.starters = false);
     state.next = true
   }
 }
@@ -27,11 +28,6 @@ const getResponse = (action, player, players) => {
 
   state.action = action
   state.next = false
-
-
-    state.players.forEach((item, i) => {
-      item.starters = false
-    });
 
 
   if(action == 'next'){
@@ -90,7 +86,7 @@ const getResponse = (action, player, players) => {
     });
 
   } else if (action == 'rip'){
-      state.players.find((p, i) => {
+    state.players.find((p, i) => {
         if(p.name === player){
             p.rip = !p.rip
         }
