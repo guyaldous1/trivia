@@ -2,6 +2,18 @@ const express = require('express')
 const router = express.Router()
 const deck = require('../cards.js')
 
+const isDone = (player) => player.done || player.rip;
+
+function checkNext(){
+  if(state.players.every(isDone)){
+    state.currentCards = deck.drawCards(state.currentDeck);
+    state.players = state.players.filter(p => !p.rip);
+    state.players.map(x => x.secondChances = []);
+    state.players.map(x => x.done = false);
+    state.next = true
+  }
+}
+
 
 const state = {
   action: 'blank',
@@ -15,6 +27,12 @@ const getResponse = (action, player, players) => {
 
   state.action = action
   state.next = false
+
+
+    state.players.forEach((item, i) => {
+      item.starters = false
+    });
+
 
   if(action == 'next'){
 
@@ -37,8 +55,10 @@ const getResponse = (action, player, players) => {
 
     state.currentDeck = deck.shuffleCards();
     state.starterDeck = deck.shuffleStarters();
+    state.currentCards = []
     state.players.forEach((item, i) => {
       item.secondChances = deck.drawStarters(state.starterDeck);
+      item.starters = true
     });
 
   } else if (action == 'starter') {
@@ -54,18 +74,11 @@ const getResponse = (action, player, players) => {
 
     state.players.find((p, i) => {
       if(p.name === player){
-          p.done = true
+          p.done = !p.done
       }
     });
 
-    const isDone = (player) => player.done;
-
-    if(state.players.every(isDone)){
-      state.currentCards = deck.drawCards(state.currentDeck);
-      state.players.map(x => x.secondChances = []);
-      state.players.map(x => x.done = false);
-      state.next = true
-    }
+    checkNext()
 
   } else if (action == 'chance'){
 
@@ -76,7 +89,18 @@ const getResponse = (action, player, players) => {
         }
     });
 
+  } else if (action == 'rip'){
+      state.players.find((p, i) => {
+        if(p.name === player){
+            p.rip = !p.rip
+        }
+    });
+
+    checkNext()
+
   }
+
+
   return state
 }
 

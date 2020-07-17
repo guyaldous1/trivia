@@ -50,6 +50,7 @@
       const wrap = document.createElement('div')
       wrap.setAttribute('class', 'player')
       if(player.done) wrap.classList.add('player--done')
+      if(player.rip) wrap.classList.add('player--rip')
 
       const name = document.createElement('h3')
       name.innerHTML = player.name
@@ -67,16 +68,28 @@
       const chance = document.createElement('div')
       chance.setAttribute('class', 'player_chance')
 
-      const chanceBtn = document.createElement('button')
-      chanceBtn.innerHTML = 'Second Chance'
-      chanceBtn.setAttribute('class', 'btn btn-success ajax')
-      chanceBtn.setAttribute('name', 'action')
-      chanceBtn.setAttribute('value', 'chance')
-      chanceBtn.setAttribute('player', player.name)
+      if(player.secondChances.length > 0 && !player.starters){
+        const ripBtn = document.createElement('button')
+        ripBtn.innerHTML = "I have died"
+        ripBtn.setAttribute('class', 'btn btn-dark ajax')
+        ripBtn.setAttribute('name', 'action')
+        ripBtn.setAttribute('value', 'rip')
+        ripBtn.setAttribute('player', player.name)
 
-      chance.appendChild(chanceBtn)
+        wrap.appendChild(ripBtn)
 
-      if(player.secondChances > 0){
+      } else if(!player.starters) {
+        const chanceBtn = document.createElement('button')
+        chanceBtn.innerHTML = 'Second Chance'
+        chanceBtn.setAttribute('class', 'btn btn-warning ajax')
+        chanceBtn.setAttribute('name', 'action')
+        chanceBtn.setAttribute('value', 'chance')
+        chanceBtn.setAttribute('player', player.name)
+
+        chance.appendChild(chanceBtn)
+      }
+
+      if(player.secondChances.length > 0){
         let chanceCard = renderCard(player.secondChances[0])
         chance.appendChild(chanceCard)
       }
@@ -92,6 +105,7 @@
       let playerHolder = $('#players');
 
       playerHolder.empty()
+
       players.forEach(item => {
         playerHolder.append(renderPlayer(item))
       })
@@ -137,18 +151,23 @@
 
         $('.wt-popover').removeClass('open')
 
-        let player;
+        if($(this).attr('value') === 'chance' && obj.currentDeck <= 0){
+          alert('no more cards')
+        } else {
 
-        if($(this).attr('player')){
-          player = $(this).attr('player');
+          let player;
+
+          if($(this).attr('player')){
+            player = $(this).attr('player');
+          }
+
+          const req = {
+            action: $(this).attr('value'),
+            player: player,
+          }
+
+          $.post("/deck", req )
         }
-
-        const req = {
-          action: $(this).attr('value'),
-          player: player,
-        }
-
-        $.post("/deck", req )
       })
 
     }
@@ -172,6 +191,8 @@
         alert('add more players')
         return
       }
+
+      $('#card-row').empty()
 
       $('#newGame--p1').removeClass('d-none')
       $('#newGame--p2').addClass('d-none')

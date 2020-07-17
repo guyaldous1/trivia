@@ -270,6 +270,11 @@ header h1{
   filter: grayscale(1);
 }
 
+.player--rip{
+  filter: grayscale(1) !important;
+  opacity: 0.4;
+}
+
 .player_chance .card{
   padding: 0;
   height: unset;
