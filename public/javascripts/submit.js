@@ -123,7 +123,9 @@
       if(obj.action === 'newGame'){
         let scorecard = newScorecard()
         renderScorecard(scorecard);
-      } else if (obj.action === 'done' || obj.action === 'rip' && obj.next === true) {
+      }
+
+      if(obj.action === 'done' && obj.next === true){
         let scorecard = getSavedScore();
 
         let newScorecard = scorecard.map(function(item){ return item === 2 ? 1 : item })
