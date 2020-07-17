@@ -62,7 +62,6 @@ function newScorecard(){
 
 function clickHandlers(scorecard){
   let items = $('.personal-grid__item');
-  console.log('donk')
 
   items.on('click', function(){
     let target = $(this);

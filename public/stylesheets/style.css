@@ -200,6 +200,12 @@ header h1{
   right: 20px;
 }
 
+#openNew{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 #players{
   display: flex;
   justify-content: space-around;
@@ -212,8 +218,12 @@ header h1{
   width: 100%;
   max-width: 150px;
   height: 200px;
-  background: red;
+  /* background: red; */
   margin:2px;
+}
+
+.player--done{
+  filter: grayscale(1);
 }
 
 .player_chance .card{
@@ -221,6 +231,10 @@ header h1{
   height: unset;
 }
 
-.player_chance button{
+.player button{
   font-size: 0.7rem;
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 3px;
 }

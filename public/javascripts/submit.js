@@ -49,10 +49,20 @@
     function renderPlayer(player){
       const wrap = document.createElement('div')
       wrap.setAttribute('class', 'player')
+      if(player.done) wrap.classList.add('player--done')
 
       const name = document.createElement('h3')
       name.innerHTML = player.name
       wrap.appendChild(name)
+
+      const doneBtn = document.createElement('button')
+      doneBtn.innerHTML = 'Done'
+      doneBtn.setAttribute('class', 'btn btn-success ajax')
+      doneBtn.setAttribute('name', 'action')
+      doneBtn.setAttribute('value', 'done')
+      doneBtn.setAttribute('player', player.name)
+
+      wrap.appendChild(doneBtn)
 
       const chance = document.createElement('div')
       chance.setAttribute('class', 'player_chance')

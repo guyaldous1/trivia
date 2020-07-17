@@ -17,7 +17,8 @@ const state = {
     {
       name: 'Rob',
       secondChances: [],
-      starter: []
+      starter: [],
+      done: false
     },
     {
       name: 'Kath',
@@ -40,6 +41,7 @@ const getResponse = (action, player) => {
   if(action == 'next'){
     state.currentCards = deck.drawCards(state.currentDeck);
     state.players.map(x => x.secondChances = []);
+
   } else if (action == 'newGame') {
     state.currentDeck = deck.shuffleCards();
     state.starterDeck = deck.shuffleStarters();
@@ -53,6 +55,22 @@ const getResponse = (action, player) => {
           p.starter = starter
       }
     });
+  } else if (action == 'done') {
+
+    state.players.find((p, i) => {
+      if(p.name === player){
+          p.done = true
+      }
+    });
+
+    const isDone = (player) => player.done;
+
+    if(state.players.every(isDone)){
+      state.currentCards = deck.drawCards(state.currentDeck);
+      state.players.map(x => x.secondChances = []);
+      state.players.map(x => x.done = false);
+    }
+
   } else if (action == 'chance'){
     let chance = deck.drawStarters(state.currentDeck);
       state.players.find((p, i) => {
