@@ -22,6 +22,8 @@ const state = {
   currentDeck: [],
   players: [],
   starterDeck: [],
+  next: false,
+  version: process.env.VERSION,
 }
 
 const getResponse = (action, player, players) => {

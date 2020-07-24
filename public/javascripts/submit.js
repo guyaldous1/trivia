@@ -1,6 +1,6 @@
     const socket = io()
     let alreadyPlaying = false
-
+    let appVersion = 'sfw';
 
     socket.on('data', init)
 
@@ -115,6 +115,9 @@
 
     function init(obj){
       console.log(obj)
+
+      appVersion = obj.version
+
       let currentCards = obj.currentCards;
       let players = obj.players;
 
